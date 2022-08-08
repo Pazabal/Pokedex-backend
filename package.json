@@ -1,0 +1,23 @@
+{
+  "name": "backend-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon inex.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pazabal/Pokedex-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pazabal/Pokedex-backend/issues"
+  },
+  "homepage": "https://github.com/Pazabal/Pokedex-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0"
+  }
+}
