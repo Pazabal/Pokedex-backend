@@ -4,8 +4,15 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('pokemon').del()
-  await knex('pokemon').insert([
+ await knex('pokemon').del();
+ await knex('types').del();
+ await knex('moves').del();
+ await knex('pokemonsxtypes').del();
+
+ await knex('pokemon').insert([
+
+  //POKEMON
+
     {name: 'bulbasaur', height:6.9, weight:0.7, description:'It carries a seed\non its back right\nfrom birth. As it\fgrows older, the\nseed also grows\nlarger.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg', hp:45, atk:49, def:49, satk: 65, sdef: 65, spd: 45},
     {name: 'ivysaur', height:1.0, weight:13.0, description:'If the bud on its\nback starts to\nsmell sweet, it\fis evidence that\nthe large flower\nwill soon bloom.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg', hp:60, atk:62, def:63, satk: 80, sdef: 80, spd: 60},
     {name: 'venusaur', height:2.0, weight:100.0, description:'It is able to con­\nvert sunlight into\nenergy. As a\fresult, it is more\npowerful in the\nsummertime.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg', hp:80, atk:82, def:83, satk: 100, sdef: 100, spd: 80},
@@ -36,5 +43,137 @@ exports.seed = async function(knex) {
     {name: 'sandslash', height:1.0, weight:29.5, description:'If it digs at an\nincredible pace,\nit may snap off\fits spikes and\nclaws. They grow\nback in a day.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/28.svg', hp:75, atk:100, def:110, satk: 45, sdef: 55, spd: 65},
     {name: 'nidoran', height:0.4, weight:7.0, description:'Although not very\ncombative, it will\ntorment its foes\fwith poison spikes\nif it is threat­\nened in any way.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/29.svg', hp:55, atk:47, def:52, satk: 40, sdef: 40, spd: 41},
     {name: 'nidorina', height:0.8, weight:20.0, description:'It has a calm and\ncaring nature.\nBecause its horn\fgrows slowly, it\nprefers not to\nfight.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/30.svg', hp:70, atk:62, def:67, satk: 55, sdef: 55, spd: 56}
-  ]);//knex seed:run
+  ]);
+
+  //TYPES
+
+  await knex('types').insert([
+    {name: 'water'},
+    {name: 'fire'},
+    {name: 'grass'},
+    {name: 'poison'},
+    {name: 'ghost'},
+    {name: 'electric'},
+    {name: 'bug'},
+    {name: 'flying'},
+    {name: 'normal'},
+    {name: 'psychic'},
+    {name: 'steel'},
+    {name: 'rock'},
+    {name: 'dark'},
+    {name: 'ground'},
+    {name: 'dragon'},
+    {name: 'fairy'},
+    {name: 'fighting'},
+    {name: 'ice'}
+  ]);
+  
+
+  //MOVES
+
+  await knex('moves').insert([
+    {move1: 'razor-wind', move2:'sword-dance'},
+    {move1: 'sword-dance', move2:'cut'},
+    {move1: 'sword-dance', move2:'cut'},
+    {move1: 'mega-punch', move2:'fire-punch'},
+    {move1: 'mega-punch', move2:'fire-punch'},
+    {move1: 'mega-punch', move2:'fire-punch'},
+    {move1: 'mega-punch', move2:'ice-punch'},
+    {move1: 'mega-punch', move2:'ice-punch'},
+    {move1: 'mega-punch', move2:'ice-punch'},
+    {move1: 'tackle', move2:'string-shot'},
+    {move1: 'string-shot', move2:'harden'},
+    {move1: 'razor-wind', move2:'gust'},
+    {move1: 'poison-sting', move2:'string-shot'},
+    {move1: 'string-shot', move2:'harden'},
+    {move1: 'sword-dance', move2:'cut'},
+    {move1: 'razor-wind', move2:'gust'},
+    {move1: 'razor-wind', move2:'gust'},
+    {move1: 'razor-wind', move2:'gust'},
+    {move1: 'cut', move2:'headbutt'},
+    {move1: 'sword-dance', move2:'cut'},
+    {move1: 'razor-wind', move2:'whirlwind'},
+    {move1: 'razor-wind', move2:'whirlwind'},
+    {move1: 'bind', move2:'slam'},
+    {move1: 'bind', move2:'slam'},
+    {move1: 'mega-punch', move2:'pay-day'},
+    {move1: 'mega-punch', move2:'pay-day'},
+    {move1: 'scratch', move2:'sword-dance'},
+    {move1: 'scratch', move2:'sword-dance'},
+    {move1: 'scratch', move2:'cut'},
+    {move1: 'scratch', move2:'cut'}
+    
+  ]);
+
+  // POKEMONSXTYPES
+
+  await knex('pokemonsxtypes').insert([
+    {pokemon_id: 1, type1_id: 3, type2_id: 4, type3_id: 0},
+    {pokemon_id: 2, type1_id: 3, type2_id: 4, type3_id: 0},
+    {pokemon_id: 3, type1_id: 3, type2_id: 4, type3_id: 0},
+    {pokemon_id: 4, type1_id: 2, type2_id: 0, type3_id: 0},
+    {pokemon_id: 5, type1_id: 2, type2_id: 0, type3_id: 0},
+    {pokemon_id: 6, type1_id: 2, type2_id: 8, type3_id: 0},
+    {pokemon_id: 7, type1_id: 1, type2_id: 0, type3_id: 0},
+    {pokemon_id: 8, type1_id: 1, type2_id: 0, type3_id: 0},
+    {pokemon_id: 9, type1_id: 1, type2_id: 0, type3_id: 0},
+    {pokemon_id: 10, type1_id: 7, type2_id: 0, type3_id: 0},
+    {pokemon_id:11, type1_id: 7, type2_id: 0, type3_id: 0},
+    {pokemon_id: 12, type1_id: 7, type2_id: 8, type3_id: 0},
+    {pokemon_id: 13, type1_id: 7, type2_id: 4, type3_id: 0},
+    {pokemon_id: 14, type1_id: 7, type2_id: 4, type3_id: 0},
+    {pokemon_id:15, type1_id: 7, type2_id: 4, type3_id: 0},
+    {pokemon_id: 16, type1_id: 9, type2_id: 8, type3_id: 0},
+    {pokemon_id: 17, type1_id: 9, type2_id: 8, type3_id: 0},
+    {pokemon_id: 18, type1_id: 9, type2_id: 8, type3_id: 0},
+    {pokemon_id: 19, type1_id: 9, type2_id: 0, type3_id: 0},
+    {pokemon_id: 20, type1_id: 9, type2_id: 0, type3_id: 0},
+    {pokemon_id: 21, type1_id: 9, type2_id: 8, type3_id: 0},
+    {pokemon_id: 22, type1_id: 4, type2_id: 0, type3_id: 0},
+    {pokemon_id: 23, type1_id: 4, type2_id: 0, type3_id: 0},
+    {pokemon_id: 24, type1_id: 6, type2_id: 0, type3_id: 0},
+    {pokemon_id: 25, type1_id: 6, type2_id: 0, type3_id: 0},
+    {pokemon_id: 26, type1_id: 14, type2_id: 0, type3_id: 0},
+    {pokemon_id: 27, type1_id: 14, type2_id: 0, type3_id: 0},
+    {pokemon_id: 28, type1_id: 14, type2_id: 0, type3_id: 0},
+    {pokemon_id: 29, type1_id: 4, type2_id: 0, type3_id: 0},
+    {pokemon_id: 30, type1_id: 4, type2_id: 0, type3_id: 0}
+   
+  ]);
+
+  // POKEMONSXMOVES
+
+  await knex('pokemonsxmoves').insert([
+    {pokemon_id:1, moves_id:1},
+    {pokemon_id:2, moves_id:2},
+    {pokemon_id:3, moves_id:3},
+    {pokemon_id:4, moves_id:4},
+    {pokemon_id:5, moves_id:5},
+    {pokemon_id:6, moves_id:6},
+    {pokemon_id:7, moves_id:7},
+    {pokemon_id:8, moves_id:8},
+    {pokemon_id:9, moves_id:9},
+    {pokemon_id:10, moves_id:10},
+    {pokemon_id:11, moves_id:11},
+    {pokemon_id:12, moves_id:12},
+    {pokemon_id:13, moves_id:13},
+    {pokemon_id:14, moves_id:14},
+    {pokemon_id:15, moves_id:15},
+    {pokemon_id:16, moves_id:16},
+    {pokemon_id:17, moves_id:17},
+    {pokemon_id:18, moves_id:18},
+    {pokemon_id:19, moves_id:19},
+    {pokemon_id:20, moves_id:20},
+    {pokemon_id:21, moves_id:21},
+    {pokemon_id:22, moves_id:22},
+    {pokemon_id:23, moves_id:23},
+    {pokemon_id:24, moves_id:24},
+    {pokemon_id:25, moves_id:25},
+    {pokemon_id:26, moves_id:26},
+    {pokemon_id:27, moves_id:27},
+    {pokemon_id:28, moves_id:28},
+    {pokemon_id:29, moves_id:29},
+    {pokemon_id:30, moves_id:30}
+  ])
+
 };
