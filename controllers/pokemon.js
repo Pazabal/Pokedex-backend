@@ -27,11 +27,11 @@ const createPokemon = (body) => {
     knex('pokemon')
     .insert(body)
     .then( (res) => {
-        // const pokemonsToInsert = body.moves.map(move =>
-        //     ({moves_id: move.id, pokemon_id: pokemon.id}));
+        const pokemonsToInsert = body.moves.map(move =>
+            ({moves_id: move.id, pokemon_id: pokemon.id}));
     
-        // return knex('pokemonsxmoves').insert(pokemonsToInsert)
-        console.log(res);
+         return knex('pokemonsxmoves').insert(pokemonsToInsert)
+        // console.log(res);
     })
     .catch(() => {})
    
