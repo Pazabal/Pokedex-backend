@@ -19,33 +19,41 @@ knex.select('*')
 
 const getPokemonById = (id) => {
     return knex('pokemon')
-    .where('id', id)
+    .where('id',id)
     .select('name', 'id', 'weight','height' ,'description', 'image', 'hp', 'atk', 'def', 'satk','sdef', 'spd')
 }
 
 const createPokemon = (body) => {
     knex('pokemon')
     .insert(body)
-    .then( (res) => {
-        const pokemonsToInsert = body.moves.map(move =>
-            ({moves_id: move.id, pokemon_id: pokemon.id}));
+    .returning('id')
+    .then( (id) => {
+        const pokemonsToInsertMoves = body.moves.map(move =>
+            ({moves_id: move.id, pokemon_id: id}));
     
-         return knex('pokemonsxmoves').insert(pokemonsToInsert)
-        // console.log(res);
+         return knex('pokemonsxmoves').insert(pokemonsToInsertMoves)
+            // console.log("create pokemon");
+
     })
-    .catch(() => {})
+    .then( (id) =>{
+        const pokemonsToInsertType = body.types.map(type =>
+            ({types_id: type.id, pokemon_id: id}))
+        return knex('pokemonsxtypes').insert(pokemonsToInsertType)
+    })
+    .catch((error) => {res.send('Error' + error)})
+    
    
 }
 
 const updatePokemon = (id, body) => {
     return knex('pokemon')
-    .where(id, 'id')
+    .where('id', id)
     .update(body)
 }
 
 const deletePokemon = (id) =>{
     return knex('pokemon')
-    .where(id, 'id')
+    .where('id' , id)
     .del()
 }
 

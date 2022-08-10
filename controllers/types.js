@@ -10,7 +10,7 @@ const getAllTypes = () => {
 
 const getTypeById = (id) => {
     return knex('types')
-    .where(id, 'id')
+    .where('id' , id)
     .select('name', 'id')
 }
 
