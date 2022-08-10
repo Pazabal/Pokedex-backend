@@ -8,6 +8,15 @@ const getAllPokemons = () => {
     .from('pokemon')
 }
 
+knex.select('*')
+    .from('pokemon')
+    .join('moves', {'moves.id': 'pokemon.moves_id'})
+    .join('types', {'types.id': 'pokemon.types_id'})
+    .join('pokemonsxmoves', {'pokemonsxmoves.id': 'pokemon.pokemonsxmoves_id'})
+    .join('pokemonsxtypes', {'pokemonsxtypes.id': 'pokemon.pokemonsxtypes_id'})
+
+
+
 const getPokemonById = (id) => {
     return knex('pokemon')
     .where('id', id)
@@ -17,8 +26,15 @@ const getPokemonById = (id) => {
 const createPokemon = (body) => {
     knex('pokemon')
     .insert(body)
-   
+    .then( (res) => {
+        // const pokemonsToInsert = body.moves.map(move =>
+        //     ({moves_id: move.id, pokemon_id: pokemon.id}));
     
+        // return knex('pokemonsxmoves').insert(pokemonsToInsert)
+        console.log(res);
+    })
+    .catch(() => {})
+   
 }
 
 const updatePokemon = (id, body) => {

@@ -13,7 +13,7 @@ const getPokemonsxMovesById = (id) => {
     .where('id', id)
     .select('pokemon_id', 'id', 'moves_id')
 } 
-const createPokemonsxMovesById = (body) => {
+const createPokemonsxMoves = (body) => {
     return knex('pokemonsxmoves')
     .insert(body)
 }
@@ -31,7 +31,7 @@ const deletePokemonsxMoves = (id) => {
 module.exports = {
     getAllPokemonsxMoves,
     getPokemonsxMovesById,
-    createPokemonsxMovesById,
+    createPokemonsxMoves,
     deletePokemonsxMoves,
     updatePokemonsxMoves
 }
