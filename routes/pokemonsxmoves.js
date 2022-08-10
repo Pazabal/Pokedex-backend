@@ -9,26 +9,26 @@ router.get('/', async (req, res) => {
 
 router.get('/:id' , async (req, res) => {
     const id = req.params.id
-    const pokemonsxMoves = await pokemonsxMovesQueries.getPokemonsxMovesById();
+    const pokemonsxMoves = await pokemonsxMovesQueries.getPokemonsxMovesById(id);
     res.json(pokemonsxMoves)
 })
 
 router.post('/' , async (req, res) => {
     const body = req.body
-    const newPokemonsxMoves = await pokemonsxMovesQueries.createPokemonsxMoves();
+    const newPokemonsxMoves = await pokemonsxMovesQueries.createPokemonsxMoves(body);
     res.json(newPokemonsxMoves)
 })
 
 router.put('/:id' , async (req, res) => {
     const id = req.params.id
     const body = req.body
-    const updatePokemonsxMoves = await pokemonsxMovesQueries.updatePokemonsxMoves();
+    const updatePokemonsxMoves = await pokemonsxMovesQueries.updatePokemonsxMoves(id, body);
     res.json(updatePokemonsxMoves)
 })
 
 router.delete('/id' ,async (req, res) => {
     const id = req.params.id
-    const deletePokemonsxMoves = await pokemonsxMoves.deletePokemonsxMoves();
+    const deletePokemonsxMoves = await pokemonsxMoves.deletePokemonsxMoves(id);
     res.json(deletePokemonsxMoves)
 })
 

@@ -19,7 +19,7 @@ knex.select('*')
 
 const getPokemonById = (id) => {
     return knex('pokemon')
-    .where('id', id)
+    .where('id',id)
     .select('name', 'id', 'weight','height' ,'description', 'image', 'hp', 'atk', 'def', 'satk','sdef', 'spd')
 }
 
@@ -39,13 +39,13 @@ const createPokemon = (body) => {
 
 const updatePokemon = (id, body) => {
     return knex('pokemon')
-    .where(id, 'id')
+    .where('id', id)
     .update(body)
 }
 
 const deletePokemon = (id) =>{
     return knex('pokemon')
-    .where(id, 'id')
+    .where('id' , id)
     .del()
 }
 
