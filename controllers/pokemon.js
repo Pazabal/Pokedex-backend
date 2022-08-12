@@ -25,34 +25,23 @@ const getPokemonById = (id) => {
 
 const createPokemon = (body) => {
     knex('pokemon')
-    .insert(body.pokemon)
+    .insert(body)
     .returning('id')
+    // .where('id', '=', id)
     .then( (id) => {
-         const pokemonsToInsertMoves = body.moves.map(move =>
-             ({moves_id: move.move_id, pokemon_id: parseInt.id}));
+        const pokemonsToInsertMoves = body.moves.map(move =>
+            ({moves_id: move.moves_id, pokemon_id: id}));
     
-<<<<<<< HEAD
-          return knex('pokemonsxmoves').insert(pokemonsToInsertMoves)
-            console.log(body.moves);
-    })
-     .then( (id) => {
-        const pokemonsToInsertTypes = body.types.map(type =>
-             ({type_id: type.type_id, pokemon_id: parseInt.id}))
-         return knex('pokemonsxtypes').insert(pokemonsToInsertTypes)
-         console.log(body.types);
-=======
          return knex('pokemonsxmoves').insert(pokemonsToInsertMoves)
             // console.log("create pokemon");
 
     })
     .then( (id) =>{
-        const pokemonsToInsertType = body.types.map(type =>
+        const pokemonsToInsertTypes = body.types.map(type =>
             ({types_id: type.id, pokemon_id: id}))
-        return knex('pokemonsxtypes').insert(pokemonsToInsertType)
->>>>>>> 19b20492e46b154e4636b39a129c0cbce098d8db
+        return knex('pokemonsxtypes').insert(pokemonsToInsertTypes)
     })
-     //.catch((error) => {res.send('Error' + error)})
-    
+   
    
 }
 

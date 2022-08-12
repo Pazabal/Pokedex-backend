@@ -28,7 +28,7 @@ router.put('/:id' , async (req, res) => {
 
 router.delete('/:id' ,async (req, res) => {
     const id = req.params.id
-    const deletePokemonsxMoves = await pokemonsxMoves.deletePokemonsxMoves(id);
+    const deletePokemonsxMoves = await pokemonsxMovesQueries.deletePokemonsxMoves(id);
     res.json(deletePokemonsxMoves)
 })
 
