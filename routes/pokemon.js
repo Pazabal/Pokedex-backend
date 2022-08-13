@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pokemonQueries = require('../controllers/pokemon')
 
+
 router.get('/', async (req, res) => {
     const pokemon = await pokemonQueries.getAllPokemons();
     res.json(pokemon)

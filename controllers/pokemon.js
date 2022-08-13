@@ -8,13 +8,14 @@ const getAllPokemons = () => {
     .from('pokemon')
 }
 
-knex.select('*')
-    .from('pokemon')
-    .join('pokemonsxmoves', 'pokemon_id', 'pokemon.id')
-    .join('moves','id', 'pokemonsxmoves.moves_id')
-    .join('pokemonsxtypes', 'pokemon_id','pokemon.id')
-    .join('types', 'id', 'pokemonxtypes.type_id');
-    
+
+// knex.select('*')
+//     .from('pokemon')
+//     .join('pokemonsxmoves', 'pokemon_id', 'pokemon.id')
+//     .join('moves','id', 'pokemonsxmoves.moves_id')
+//     .join('pokemonsxtypes', 'pokemon_id','pokemon.id')
+//     .join('types', 'id', 'pokemonsxtypes.type_id');
+ 
 
 
 
@@ -25,24 +26,25 @@ const getPokemonById = (id) => {
 }
 
 const createPokemon = (body) => {
-    knex('pokemon')
+    return knex('pokemon')
     .insert(body)
-    .returning('id')
+    // .returning('id')
     // .where('id', '=', id)
-    .then( (id) => {
-        const pokemonsToInsertMoves = body.moves.map(move =>
-            ({moves_id: move.moves_id, pokemon_id: id}));
+    // .then( (id) => {
+    //     const pokemonsToInsertMoves = body.moves.map(move =>
+    //         ({moves_id: move.moves_id, pokemon_id: id}));
     
-         return knex('pokemonsxmoves').insert(pokemonsToInsertMoves)
-            // console.log("create pokemon");
+    //      return knex('pokemonsxmoves').insert(pokemonsToInsertMoves)
+    //         // console.log("create pokemon");
 
-    })
-    .then( (id) =>{
-        const pokemonsToInsertTypes = body.types.map(type =>
-            ({types_id: type.id, pokemon_id: id}))
-        return knex('pokemonsxtypes').insert(pokemonsToInsertTypes)
-    })
-   
+    // })
+    // .then( (id) =>{
+    //     const pokemonsToInsertTypes = body.types.map(type =>
+    //         ({types_id: type.id, pokemon_id: id}))
+    //     return knex('pokemonsxtypes').insert(pokemonsToInsertTypes)
+    // })
+    
+    
    
 }
 
