@@ -4,12 +4,21 @@
  */
  exports.seed = async function(knex) {
   // Deletes ALL existing entries
+await knex('user').del()
  await knex('pokemon').del();
  await knex('types').del();
  await knex('moves').del();
  await knex('pokemonsxtypes').del();
  await knex('pokemonsxmoves').del();
  
+    
+//USERS
+await knex('user').insert([
+{name: 'Fernando', password: 'password'},
+{name: 'Perez', password: 'password'}, 
+]);
+
+
 //POKEMON
  await knex('pokemon').insert([
 {name: 'bulbasaur', height:6.9, weight:0.7, description:'It carries a seed\non its back right\nfrom birth. As it\fgrows older, the\nseed also grows\nlarger.', image:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg', hp:45, atk:49, def:49, satk: 65, sdef: 65, spd: 45},

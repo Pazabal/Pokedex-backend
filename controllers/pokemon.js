@@ -18,11 +18,49 @@ const getAllPokemons = () => {
 
 
 
-const getPokemonById = (id) => {
-    return knex('pokemon')
-    .where('id',id)
-    .select('name', 'id', 'weight','height' ,'description', 'image', 'hp', 'atk', 'def', 'satk','sdef', 'spd')
-}
+// const getPokemonById = (id) => {
+//     return knex('pokemon')
+//     .where('id',id)
+//     .select('name', 'id', 'weight','height' ,'description', 'image', 'hp', 'atk', 'def', 'satk','sdef', 'spd')
+//     .join('','')
+// }
+
+const getPokemonById = async (id) =>{
+    let pokemonFinal = {datos_pokemon:{}, moves:[], types:[]}
+    await knex('pokemon')
+    .where('id', id)
+    .select('name', 'id', 'weight', 'height', 'description', 'image', 'hp', 'atk', 'def', 'satk', 'sdef', 'spd')
+    .then((arrayDePokemon) => {
+    return pokemonFinal['datos_pokemon'] = arrayDePokemon[0]
+    })
+    await knex
+    .select("moves.name")
+    .from("moves")
+    .innerJoin("pokemonsxmoves", "moves.id", "pokemonsxmoves.moves_id")
+    .innerJoin("pokemon", "pokemonsxmoves.pokemon_id", "pokemon.id")
+    .where("pokemon.id", pokemonFinal.datos_pokemon.id)
+    .then((pokemonsMoves) => {
+    console.log(pokemonsMoves)
+    pokemonsMoves.map((move) => {
+    pokemonFinal.moves.push(move)
+    })
+    return pokemonFinal
+    })
+    await knex
+    .select('types.name')
+    .from('types')
+    .innerJoin('pokemonsxtypes', 'types.id', "pokemonsxtypes.types_id")
+    .innerJoin('pokemon', 'pokemonsxtypes.pokemon_id', 'pokemon.id')
+    .where('pokemon.id', pokemonFinal.datos_pokemon.id)
+    .then((pokemonsTypes) => {
+    console.log(pokemonsTypes)
+    pokemonsTypes.map((type) => {
+        pokemonFinal.types.push(type)
+    })
+    })
+    return pokemonFinal
+  }
+  
 
 // const createPokemon = (body) => {
 //     return knex('pokemon')
@@ -67,10 +105,12 @@ const getPokemonById = (id) => {
     //       });
     //   };
     const createPokemon = async (body) => {
-        return knex ('pokemon')
+        let pokemonid = '';
+        await knex ('pokemon')
         .insert(body.pokemon)
         .returning('id')
         .then((arrayDePokemon) => { //array de pokemones
+            pokemonid = arrayDePokemon[0].id
             const pokemonConHabilidades = body.moves.map((habilidad) => ({
                 pokemon_id: arrayDePokemon[0].id,
                 moves_id: habilidad.moves_id,
@@ -84,20 +124,30 @@ const getPokemonById = (id) => {
                 console.log(res)
             })
         })
-        .then((arrayDePokemon) => {
-            const pokemonConHabilidades = body.types.map((habilidad) => ({
-                pokemon_id: arrayDePokemon[0].id,
-                type_id: habilidad.type_id,
-            }));
-            return pokemonConHabilidades;
-        })
-        .then ((pokemonConHabilidades) => {
-            knex('pokemonsxtypes')
-            .insert(pokemonConHabilidades)
-            .then((res) => {
-                console.log(res)
-            })
-        })
+        const pokemonTypes = body.types.map((type) => ({
+            pokemon_id: pokemonid, 
+            types_id: type.types_id
+        }));
+        await knex('pokemonsxtypes')
+        .insert(pokemonTypes)
+        .then((res) => {
+            console.log(res)
+        }) 
+        // .then((arrayDePokemon) => {
+        //     const pokemonConHabilidades = body.types.map((habilidad) => ({
+        //         pokemon_id: arrayDePokemon[0].id,
+        //         type_id: habilidad.type_id,
+        //     }));
+        //     return pokemonConHabilidades;
+        // })
+        // .then ((pokemonConHabilidades) => {
+        //     knex('pokemonsxtypes')
+        //     .insert(pokemonConHabilidades)
+        //     .then((res) => {
+        //         console.log(res)
+        //     })
+        // })
+        console.log(pokemonTypes);
     }
     
       
