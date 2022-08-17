@@ -7,7 +7,7 @@ const router = express.Router();
 const usuarios = [];
 
 //Registro usuarios
-router.post('/inicio', (req,res) => {
+router.post('/login', (req,res) => {
     
     //hash contraseña
     const salt = await bcrypt.genSalt(10);
@@ -38,8 +38,8 @@ router.post('/inicio', (req,res) => {
 });
 
 //Peticion listar usuarios solo puede hacerla alguien autorizado
-router.get('/usuarios', verifyToken, async (req, res) => {
-    // datos del uuario
+router.get('/addpokemon', verifyToken, async (req, res) => {
+    // datos del usuario
     console.log(req.user);
     res.json({error: null, usuarios});
 });

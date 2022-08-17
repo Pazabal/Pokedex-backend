@@ -1,6 +1,7 @@
 const jwt = require ('jsonwebtoken');
 const TOKEN_SECRET = 'tokenSignature';
 
+
 //middleware to validate token
 const verifyToken = (req, res, next) => {
     const token = req.header('auth-token')
@@ -18,3 +19,12 @@ module.exports = {
     verifyToken,
     TOKEN_SECRET
 };
+
+app.use('/Agregar', (req,res,next)=>{
+    if (request.method==='GET'){
+       req.username='Silvina','Agustin','User';
+       next();
+    } else{
+        res.send("Para acceder primero debes loguearte");
+    }
+});
