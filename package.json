@@ -29,6 +29,7 @@
     "knex": "^2.2.0",
     "nodemon": "^2.0.19",
     "pg": "^8.7.3",
-    "pokedex-promise-v2": "^4.0.0"
+    "pokedex-promise-v2": "^4.0.0",
+    "vite": "^3.0.9"
   }
 }

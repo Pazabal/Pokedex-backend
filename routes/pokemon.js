@@ -10,9 +10,13 @@ router.get('/', async (req, res) => {
 
 router.get('/:id' , async (req, res) => {
     const id = req.params.id
-    const pokemon = await pokemonQueries.getPokemonById(id);
-    res.json(pokemon)
-   
+    const pokemon = await pokemonQueries.getPokemonById(id)
+    .then((pokemon)=>{
+        res.json(pokemon) 
+    })
+    .catch((er) =>{
+        res.json (er)
+    })
     
 })
 
