@@ -58,8 +58,52 @@ const getPokemonById = async (id) =>{
         })
         
     })
-    
+    .catch((er) =>{
+        res.json (er)
+    })
     return pokemonFinal
+   
+  }
+
+
+  const getFirstPokemon = async () =>{
+    let pokemonFinal = {datos_pokemon:{}, moves:[], types:[]}
+    await knex.select('*')
+    .from('pokemon')
+    .first()
+    .then((arrayDePokemon) => {
+        console.log(arrayDePokemon)
+        return pokemonFinal['datos_pokemon'] = arrayDePokemon
+        })
+        await knex
+        .select("moves.name")
+        .from("moves")
+        .innerJoin("pokemonsxmoves", "moves.id", "pokemonsxmoves.moves_id")
+        .innerJoin("pokemon", "pokemonsxmoves.pokemon_id", "pokemon.id")
+        .where("pokemon.id", pokemonFinal.datos_pokemon.id)
+        .then((pokemonsMoves) => {
+        pokemonsMoves.map((move) => {
+        pokemonFinal.moves.push(move)
+        })
+        return pokemonFinal
+        })
+        await knex
+        .select('types.name')
+        .from('types')
+        .innerJoin('pokemonsxtypes', 'types.id', "pokemonsxtypes.types_id")
+        .innerJoin('pokemon', 'pokemonsxtypes.pokemon_id', 'pokemon.id')
+        .where('pokemon.id', pokemonFinal.datos_pokemon.id)
+        .then((pokemonsTypes) => {
+            pokemonsTypes.map((type) => {
+                pokemonFinal.types.push(type)
+            })
+            
+        })
+        .catch((er) =>{
+            res.json (er)
+        })
+        return pokemonFinal
+       
   }
   
     const createPokemon = async (body) => {
@@ -112,6 +156,6 @@ module.exports = {
     getPokemonById,
     createPokemon,
     updatePokemon,
-    deletePokemon
-
+    deletePokemon,
+    getFirstPokemon
 }
