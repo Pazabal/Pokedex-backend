@@ -1,47 +1,67 @@
 const express = require('express');
+const configDB = require('../knexfile');
+const knex = require('knex')(configDB.development);
 const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken');
-const {verifyToken, TOKEN_SECRET} = require('../middlewares/validate-jwt');
+const {verifyToken, TOKEN_SECRET} = require('../middlewares/jwt');
 const router = express.Router();
+// const app = express()
 
-const usuarios = [];
 
-//Registro usuarios
-router.post('/login', (req,res) => {
-    
-    //hash contraseña
-    const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(req.body.password, salt);
-
-    const newUser = {
-        name: req.body.name,
-        mail: req.body.mail,
-        password: password
-    }
-    usuarios.push(newUser);
-    res.json({success: true, newUser, usuarios});
+// app.use(bodyParser.urlencoded({extended:true}));
+router.post('/login', async (req, res) => {
     //buscamos usuario con mismo mail
-    const user = usuarios.find((u) => u.mail === req.body.mail);
+    console.log(req.body)
+    const user = 
+    await knex
+    .select('*')
+    .from('user')
+    .where('user.name', req.body.name)
+    .then((user) => {
+        return user;
+    })
+    console.log(user)
     if(!user) {
         return res.status(400).json({error: 'Usuario no encontrado'});
     }
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = bcrypt.compareSync(  req.body.password, user[0].password );
+    console.log(validPassword)
     if(!validPassword) {
         return res.status(400).json({error: 'Contraseña no válida'});
     }
     //Crear el token
     const token = jwt.sign({
-        name: user.name,
-        id: user.id
+        name: user[0].name,
+        id: user[0].id
     }, TOKEN_SECRET);
     res.json({error: null, data: 'Login exitoso', token});
 });
-
-//Peticion listar usuarios solo puede hacerla alguien autorizado
-router.get('/addpokemon', verifyToken, async (req, res) => {
-    // datos del usuario
-    console.log(req.user);
-    res.json({error: null, usuarios});
-});
-
+ //Registro de un usuario
+router.post('/user', (req, res) => {
+    const password = req.body.password;
+    const newUser = {
+        name: req.body.name,
+        password //linea 38 se hace el hash
+    }
+    usuarios.push(newUser);
+    res.json({success: true, newUser, usuarios}) //Devuelve contraseña y usuario en postman
+})   
+router.post('/signin', async (req, res) => {
+    // hash contraseña
+    const salt =  bcrypt.genSaltSync(10);
+    const password =  bcrypt.hashSync(req.body.password, salt);
+    const newUser = {
+        name: req.body.name,
+        password: password
+    } 
+    console.log(newUser)
+    return await knex('user')
+    .insert(newUser)
+    .then((res) => {
+        res.status(200).json({success: true, newUser, res});
+    }).catch((err) => {
+        res.status(400).json({err: err})
+    })
+})    
 module.exports = router;

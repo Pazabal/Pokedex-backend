@@ -11,7 +11,7 @@ module.exports = {
       host: '127.0.0.1',
       port: 5432,
       user: 'postgres',
-      password: 'tannat',
+      password: 'pazchu123',
       database: 'pokedex-2'
     }
   },
@@ -22,7 +22,7 @@ module.exports = {
       host: '127.0.0.1',
       port: 5432,
       user: 'postgres',
-      password: 'rannat',
+      password: 'pazchu123',
       database: 'pokedex-2'
     },
     pool: {
