@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 // app.use(bodyParser.urlencoded({extended:true}));
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
     //buscamos usuario con mismo mail
     console.log(req.body)
     const user = 
@@ -42,7 +42,7 @@ router.post('/user', (req, res) => {
     const password = req.body.password;
     const newUser = {
         name: req.body.name,
-        password //linea 38 se hace el hash
+        password //linea 52 se hace el hash
     }
     usuarios.push(newUser);
     res.json({success: true, newUser, usuarios}) //Devuelve contraseña y usuario en postman
