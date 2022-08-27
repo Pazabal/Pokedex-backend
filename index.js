@@ -9,14 +9,14 @@ const pokemonsxTypesRouter = require('./routes/pokemonsxtypes');
 const pokemonsxMovesRouter = require('./routes/pokemonsxmoves');
 const app = express();
 
-
+app.use(cors()); //Siempre poner esta line al usar cors
 //parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended:true}));
 //parse application/json
 app.use(bodyParser.json());
 //Solo en development
 // app.use(cors());
-app.use('/login', authRouter);
+app.use('/register', authRouter);
 app.use('/pokemon' , pokemonRouter);
 app.use('/types' , typesRouter);
 app.use('/moves' , movesRouter);

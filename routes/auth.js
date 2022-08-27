@@ -10,9 +10,9 @@ const router = express.Router();
 
 
 // app.use(bodyParser.urlencoded({extended:true}));
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     //buscamos usuario con mismo mail
-    console.log(req.body)
+    console.log(req.body, 'req.body')
     const user = 
     await knex
     .select('*')
@@ -21,21 +21,21 @@ router.post('/', async (req, res) => {
     .then((user) => {
         return user;
     })
-    console.log(user)
+    console.log(user, 'user')
     if(!user) {
-        return res.status(400).json({error: 'Usuario no encontrado'});
+        return res.status(400).json({error: 'Usuario no encontrado', success:false});
     }
     const validPassword = bcrypt.compareSync(  req.body.password, user[0].password );
     console.log(validPassword)
     if(!validPassword) {
-        return res.status(400).json({error: 'Contraseña no válida'});
+        return res.status(400).json({error: 'Contraseña no válida', success:false});
     }
     //Crear el token
     const token = jwt.sign({
         name: user[0].name,
         id: user[0].id
     }, TOKEN_SECRET);
-    res.json({error: null, data: 'Login exitoso', token});
+    res.json({error: null, data: 'Login exitoso', token, success:true});
 });
  //Registro de un usuario
 router.post('/user', (req, res) => {
@@ -47,7 +47,7 @@ router.post('/user', (req, res) => {
     usuarios.push(newUser);
     res.json({success: true, newUser, usuarios}) //Devuelve contraseña y usuario en postman
 })   
-router.post('/signin', async (req, res) => {
+router.post('/', async (req, res) => {
     // hash contraseña
     const salt =  bcrypt.genSaltSync(10);
     const password =  bcrypt.hashSync(req.body.password, salt);
@@ -55,7 +55,7 @@ router.post('/signin', async (req, res) => {
         name: req.body.name,
         password: password
     } 
-    console.log(newUser)
+    console.log(newUser, 'newUser')
     return await knex('user')
     .insert(newUser)
     .then((res) => {

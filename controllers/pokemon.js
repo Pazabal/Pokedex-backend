@@ -7,23 +7,6 @@ const getAllPokemons = async () => {
     .column('id' , 'name' , 'weight','height' ,'description', 'image', 'hp', 'atk', 'def', 'satk','sdef', 'spd', 'type')
     .select()
     .from('pokemon')
-    // .then((arrayDePokemon) => {
-    //     return pokemonFinal['datos_pokemon'] = arrayDePokemon
-    //     })
-    // await knex
-    // .select('types.name')
-    // .from('types')
-    // .innerJoin('pokemonsxtypes', 'types.id', "pokemonsxtypes.types_id")
-    // .innerJoin('pokemon', 'pokemonsxtypes.pokemon_id', 'pokemon.id')
-    // .where('pokemon.id', pokemonFinal.datos_pokemon.id)
-    // .then((pokemonsTypes) => {
-    //     console.log(pokemonsTypes)
-    //     pokemonsTypes.map((type) => {
-    //         pokemonFinal.types.push(type)
-    //         })
-    //     })
-    // return pokemonFinal
-    // }
 }
 
 const getPokemonById = async (id) =>{
