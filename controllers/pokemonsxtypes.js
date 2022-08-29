@@ -3,15 +3,15 @@ const knex = require('knex')(configDB.development);
 
 const getAllPokemonsxTypes = () => {
     return knex
-    .column('pokemon_id', 'types_id')
+    .column('pokemon_id', 'types_id', 'pokemonsxtypes_id')
     .select()
     .from('pokemonsxtypes')
 }
 
 const getPokemonsxTypesById = (id) => {
     return knex('pokemonsxtypes')
-    .where('id' , id)
-    .select('id' , 'pokemon_id', 'types_id')
+    .where('pokemonsxtypes_id' , id)
+    .select('pokemonsxtypes_id' , 'pokemon_id', 'types_id')
 }
 
 const createPokemonsxTypes = (body) => {
@@ -21,13 +21,13 @@ const createPokemonsxTypes = (body) => {
 
 const updatePokemonsxTypes = (id, body) => {
     return knex('pokemonsxtypes')
-    .where('id' ,id)
+    .where('pokemonsxtypes_id' ,id)
     .update(body)
 }
 
 const deletePokemonsxTypes = (id) => {
     return knex('pokemonsxtypes')
-    .where('id', id)
+    .where('pokemonsxtypes_id', id)
     .del()
 }
 

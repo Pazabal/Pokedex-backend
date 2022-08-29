@@ -13,6 +13,13 @@ router.get('/firstpokemon', async (req,res)=>{
     res.json(pokemon)
 })
 
+router.post('/' , async (req, res) => {
+    const body = req.body
+    const newPokemon = await pokemonQueries.createPokemon(body);
+    res.json(newPokemon)
+    
+})
+
 router.get('/:id' , async (req, res) => {
     const id = req.params.id
     await pokemonQueries.getPokemonById(id)
@@ -22,13 +29,6 @@ router.get('/:id' , async (req, res) => {
     .catch((er) =>{
         return res.json (er)
     })
-    
-})
-
-router.post('/' , async (req, res) => {
-    const body = req.body
-    const newPokemon = await pokemonQueries.createPokemon(body);
-    res.json(newPokemon)
     
 })
 
