@@ -13,6 +13,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     //buscamos usuario con mismo mail
     console.log(req.body, 'req.body')
+    try {
     const user = 
     await knex
     .select('*')
@@ -36,6 +37,9 @@ router.post('/login', async (req, res) => {
         id: user[0].id
     }, TOKEN_SECRET);
     res.json({error: null, data: 'Login exitoso', token, success:true});
+    } catch (error) {
+        console.log("Error en login");
+      }
 });
  //Registro de un usuario
 router.post('/user', (req, res) => {
@@ -59,7 +63,7 @@ router.post('/', async (req, res) => {
     return await knex('user')
     .insert(newUser)
     .then((res) => {
-        res.status(200).json({success: true, newUser, res});
+        res.status(200).json({success: true, newUser, res}); // success:true preguntar richard
     }).catch((err) => {
         res.status(400).json({err: err})
     })
